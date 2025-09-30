@@ -13,8 +13,12 @@ class SupplierSerializer(ModelSerializer):
 
 class ProductSerializer(ModelSerializer):
     category = CategorySerializer() 
-    supplier = SupplierSerializer()
-    
+    supplier = SupplierSerializer(many=True)
+    class Meta:
+        model = Product
+        fields = ["id", "name", "price", "stock_quantity", "category", "supplier"]
+
+class CreateProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = ["name", "price", "stock_quantity", "category", "supplier"]

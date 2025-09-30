@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from Product.models import Product, Category, Supplier
-from Product.serializers import CategorySerializer, ProductSerializer, SupplierSerializer
+from Product.serializers import CategorySerializer, ProductSerializer, SupplierSerializer, CreateProductSerializer
 
 # Create your views here.
 
@@ -17,4 +17,9 @@ class SupplierViewsets(ModelViewSet):
 
 class ProductViewsets(ModelViewSet):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CreateProductSerializer
+        else: 
+            return ProductSerializer

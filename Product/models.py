@@ -18,7 +18,7 @@ class Supplier(models.Model):
     address = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.person_name 
+        return f"{self.company_name} | {self.person_name}" 
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
