@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ValidationError
 from Product.models import Product, Supplier, Category
 
 class CategorySerializer(ModelSerializer):
@@ -22,3 +22,8 @@ class CreateProductSerializer(ModelSerializer):
     class Meta:
         model = Product
         fields = ["name", "price", "stock_quantity", "category", "supplier"]
+
+    def validate_price(self, value):
+        if value < 0:
+            raise ValidationError("Price can't be negative")
+        return value
