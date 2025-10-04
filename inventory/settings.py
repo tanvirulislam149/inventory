@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path 
 from decouple import config
 from datetime import timedelta
+import cloudinary
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -160,3 +161,10 @@ DJOSER = {
     'TOKEN_MODEL': None,
     # other settings
 }
+
+	
+cloudinary.config( 
+  	cloud_name = config("cloud_name"),
+  	api_key = config("api_key"),
+  	api_secret = config("api_secret"),
+)

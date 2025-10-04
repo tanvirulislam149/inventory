@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
@@ -26,6 +27,7 @@ class Product(models.Model):
     stock_quantity = models.PositiveIntegerField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products")
     supplier = models.ManyToManyField(Supplier, related_name="products")
+    image = CloudinaryField("image", default="default_mlcgud")
 
     def __str__(self):
         return self.name
