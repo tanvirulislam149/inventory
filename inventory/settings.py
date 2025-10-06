@@ -161,6 +161,11 @@ SIMPLE_JWT = {
 
 DJOSER = {
     'TOKEN_MODEL': None,
+    'SERIALIZERS': {
+        'user': 'User.serializers.UserSerializer',
+        'current_user': 'User.serializers.UserSerializer',
+        'user_create': 'User.serializers.UserCreateSerializer',
+    },
     # other settings
 }
 
