@@ -30,4 +30,4 @@ class Product(models.Model):
     image = CloudinaryField("image", default="default_mlcgud")
 
     def __str__(self):
-        return self.name
+        return f"{self.name} X {self.supplier.company_name}"

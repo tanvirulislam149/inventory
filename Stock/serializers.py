@@ -5,8 +5,13 @@ from Product.serializers import ProductSerializer
 
 
 class StockSerializer(ModelSerializer):
-    # product = ProductSerializer()
+    product = ProductSerializer()
 
+    class Meta:
+        model = Stock
+        fields = ["id", "product", "date", "quantity", "movement_type", "note"]
+
+class CreateStockSerializer(ModelSerializer):
     class Meta:
         model = Stock
         fields = ["id", "product", "date", "quantity", "movement_type", "note"]
