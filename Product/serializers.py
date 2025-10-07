@@ -14,7 +14,7 @@ class SupplierSerializer(ModelSerializer):
 
 class ProductSerializer(ModelSerializer):
     category = CategorySerializer() 
-    supplier = SupplierSerializer(many=True)
+    supplier = SupplierSerializer()
     image_url = serializers.SerializerMethodField(method_name="get_image_url")
     
     class Meta:

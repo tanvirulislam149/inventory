@@ -5,7 +5,7 @@ from Product.serializers import ProductSerializer
 
 
 class StockSerializer(ModelSerializer):
-    product = ProductSerializer()
+    # product = ProductSerializer()
 
     class Meta:
         model = Stock
