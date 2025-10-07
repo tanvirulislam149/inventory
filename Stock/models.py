@@ -14,4 +14,4 @@ class Stock(models.Model):
     note = models.CharField(max_length=300)
 
     def __str__(self):
-        return f"{self.product_name} X {self.movement_type}"
+        return f"{self.product.name} X {self.movement_type}"
