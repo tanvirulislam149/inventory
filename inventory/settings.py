@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'djoser',
     "Product",
     "User",
-    "Core"
+    "Core",
+    "Stock"
 ]
 
 MIDDLEWARE = [
