@@ -5,11 +5,17 @@ from Product.models import Product
 from Stock.serializers import StockSerializer, CreateStockSerializer
 from rest_framework.exceptions import ValidationError
 from django.db import transaction
+from Core.permissions import IsOwner, IsOwnerOrStaff
 
 # Create your views here.
 class StockViewset(ModelViewSet):
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
+
+    def get_permissions(self):
+        if self.request.method in ["DELETE", "PUT", "PATCH"]:
+            return [IsOwner()]
+        return [IsOwnerOrStaff()]
 
     def get_serializer_class(self):
         if self.request.method in ["POST", "PUT", "PATCH"]:
