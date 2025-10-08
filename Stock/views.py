@@ -25,7 +25,7 @@ class StockViewset(ModelViewSet):
         
     def perform_create(self, serializer):
         with transaction.atomic():
-            serializer.save()
+            serializer.save(user = self.request.user)
             data = serializer.data
             product = Product.objects.filter(id=data["product"]).first()
             print("product", product)

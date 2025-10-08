@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from Product.models import Product, Supplier, Category
 from Stock.models import Stock 
+from User.serializers import UserSerializer
 
 class SimpleSupplierSerializer(ModelSerializer):
     class Meta:
@@ -29,10 +30,11 @@ class SimpleProductSerializer(ModelSerializer):
 
 class StockSerializer(ModelSerializer):
     product = SimpleProductSerializer()
+    user = UserSerializer()
 
     class Meta:
         model = Stock
-        fields = ["id", "product", "date", "quantity", "movement_type", "note"]
+        fields = ["id", "product", "date", "quantity", "movement_type", "note", "user"]
 
 class CreateStockSerializer(ModelSerializer):
     class Meta:
