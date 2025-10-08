@@ -27,7 +27,7 @@ class SupplierViewsets(ModelViewSet):
 
 
 class ProductViewsets(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related("supplier").select_related("category").all()
 
     def get_permissions(self):
         if self.request.method in ["DELETE"]:
@@ -36,7 +36,7 @@ class ProductViewsets(ModelViewSet):
 
 
     def get_serializer_class(self):
-        if self.request.method in ["POST", "PUT", "PATCH"]:
-            return CreateProductSerializer
-        else: 
-            return ProductSerializer
+        # if self.request.method in ["POST", "PUT", "PATCH"]:
+        #     return CreateProductSerializer
+        # else: 
+        return ProductSerializer

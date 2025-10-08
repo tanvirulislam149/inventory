@@ -9,8 +9,7 @@ from Core.permissions import IsOwner, IsOwnerOrStaff
 
 # Create your views here.
 class StockViewset(ModelViewSet):
-    queryset = Stock.objects.all()
-    serializer_class = StockSerializer
+    queryset = Stock.objects.select_related("product").select_related("user").select_related("product__category").select_related("product__supplier").all()
 
     def get_permissions(self):
         if self.request.method in ["DELETE", "PUT", "PATCH"]:
