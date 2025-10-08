@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from debug_toolbar.toolbar import debug_toolbar_urls
 
 from Product.views import ProductViewsets, CategoryViewsets, SupplierViewsets
 from Stock.views import StockViewset
@@ -33,4 +34,4 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('', include(router.urls)),
-]
+] + debug_toolbar_urls()
