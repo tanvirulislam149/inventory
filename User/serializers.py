@@ -1,6 +1,7 @@
 from djoser.serializers import UserCreateSerializer as BaseUserCreateSerializer, UserSerializer as BaseUserSerializer
 from rest_framework import serializers
 from User.models import CustomUser
+from django.contrib.auth.models import Group, Permission
 
 class UserCreateSerializer(BaseUserCreateSerializer):
 
@@ -16,3 +17,16 @@ class UserSerializer(BaseUserSerializer):
     
     def get_is_staff(self, user: CustomUser):
         return user.is_staff
+    
+
+class MyPermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = "__all__"
+
+
+class MyGroupSerializer(serializers.ModelSerializer):
+    permissions = MyPermissionSerializer(many=True)
+    class Meta:
+        model = Group
+        fields = ["id", "name", "permissions"]

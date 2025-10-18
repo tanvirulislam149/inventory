@@ -21,12 +21,15 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 
 from Product.views import ProductViewsets, CategoryViewsets, SupplierViewsets
 from Stock.views import StockViewset
+from User.views import MyGroupViewset, MyPermissionViewset
 
 router = routers.DefaultRouter()
 router.register('category', CategoryViewsets, basename="category")
 router.register('supplier', SupplierViewsets, basename="supplier")
 router.register("products", ProductViewsets, basename="products")
 router.register("stock", StockViewset, basename="stock")
+router.register("groups", MyGroupViewset, basename="groups")
+router.register("permissions", MyPermissionViewset, basename="permissions")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
