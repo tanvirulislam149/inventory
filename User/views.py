@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from rest_framework.viewsets import ModelViewSet
-from User.serializers import MyGroupSerializer, MyPermissionSerializer, CreateMyGroupSerializer
+from User.serializers import MyGroupSerializer, MyPermissionSerializer, CreateMyGroupSerializer, UserSerializer
 from django.contrib.auth.models import Group, Permission
 from Core.permissions import IsOwner
 
@@ -23,3 +23,11 @@ class MyPermissionViewset(ModelViewSet):
     queryset = Permission.objects.all()
     serializer_class = MyPermissionSerializer
     permission_classes = [IsOwner]
+
+
+class AssignRoleViewset(ModelViewSet):
+    http_method_names = ["put", "patch"]
+    serializer_class = UserSerializer
+    def update(self, request):
+        instance = self.get_object()
+        data = request.data
