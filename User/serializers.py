@@ -25,6 +25,11 @@ class MyPermissionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class CreateMyGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ["id", "name", "permissions"]
+
 class MyGroupSerializer(serializers.ModelSerializer):
     permissions = MyPermissionSerializer(many=True)
     class Meta:
