@@ -36,7 +36,7 @@ class ProductViewsets(ModelViewSet):
 
 
     def get_serializer_class(self):
-        # if self.request.method in ["POST", "PUT", "PATCH"]:
-        #     return CreateProductSerializer
-        # else: 
-        return ProductSerializer
+        if self.request.method in ["POST", "PUT", "PATCH"]:
+            return CreateProductSerializer
+        else: 
+            return ProductSerializer
