@@ -16,10 +16,19 @@ class ProductSerializer(ModelSerializer):
     category = CategorySerializer() 
     supplier = SupplierSerializer()
     image_url = serializers.SerializerMethodField(method_name="get_image_url")
+    stock_status = serializers.SerializerMethodField(method_name="get_stock_status")
     
     class Meta:
         model = Product
-        fields = ["id", "name", "price", "stock_quantity", "category", "supplier", "image_url"]
+        fields = ["id", "name", "price", "stock_quantity", "category", "supplier", "image_url", "stock_status"]
+    
+    def get_stock_status(self, obj):
+        if obj.stock_quantity == 0:
+            return "Out of Stock"
+        elif obj.stock_quantity < 15:
+            return "Low Stock"
+        else:
+            return "In Stock"
 
     def get_image_url(self, obj):
         if obj.image:
@@ -27,6 +36,7 @@ class ProductSerializer(ModelSerializer):
 
 class CreateProductSerializer(ModelSerializer):
     image = serializers.ImageField()
+    
     class Meta:
         model = Product
         fields = ["name", "price", "stock_quantity", "category", "supplier", "image"]
