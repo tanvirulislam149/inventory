@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from Stock.models import Stock
-from Product.models import Product
+from Product.models import Product, Category, Supplier
 from Stock.serializers import StockSerializer, CreateStockSerializer
 from rest_framework.exceptions import ValidationError
 from django.db import transaction
 from Core.permissions import IsOwner, IsOwnerOrStaff
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.db.models import Count, Sum, Q
 
 # Create your views here.
 class StockViewset(ModelViewSet):
@@ -37,3 +40,25 @@ class StockViewset(ModelViewSet):
                 product.stock_quantity = product.stock_quantity - data["quantity"]
 
             product.save()
+
+
+
+class DashboardViewset(ModelViewSet):
+    http_method_names = ["get"]
+    permission_classes = [IsOwnerOrStaff]
+
+    def list(self, request):
+        data = {
+            "product_count": Product.objects.aggregate(Sum("stock_quantity")),
+            "category_count": Category.objects.count(),
+            "supplier_count": Supplier.objects.count(),
+            "out_of_stock": Product.objects.filter(stock_quantity__lt=15).count()
+        }
+        return Response(data)
+
+
+class RecentActivitiesViewset(ModelViewSet):
+    http_method_names = ["get"]
+    permission_classes = [IsOwnerOrStaff]
+    serializer_class = StockSerializer
+    queryset = Stock.objects.order_by("date").all()[:5]

@@ -2,7 +2,9 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from Product.models import Product, Supplier, Category
 from Stock.models import Stock 
-from User.serializers import UserSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class SimpleSupplierSerializer(ModelSerializer):
     class Meta:
@@ -28,9 +30,14 @@ class SimpleProductSerializer(ModelSerializer):
             return obj.image.url
 
 
+class SimpleUserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["email"]
+
 class StockSerializer(ModelSerializer):
     product = SimpleProductSerializer()
-    user = UserSerializer()
+    user = SimpleUserSerializer()
 
     class Meta:
         model = Stock

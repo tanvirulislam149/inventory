@@ -20,7 +20,7 @@ from rest_framework import routers
 from debug_toolbar.toolbar import debug_toolbar_urls
 
 from Product.views import ProductViewsets, CategoryViewsets, SupplierViewsets
-from Stock.views import StockViewset
+from Stock.views import StockViewset, DashboardViewset, RecentActivitiesViewset
 from User.views import MyGroupViewset, MyPermissionViewset, CustomUserViewset
 
 router = routers.DefaultRouter()
@@ -31,6 +31,8 @@ router.register("stock", StockViewset, basename="stock")
 router.register("groups", MyGroupViewset, basename="groups")
 router.register("permissions", MyPermissionViewset, basename="permissions")
 router.register('user', CustomUserViewset, basename='user') # /api/user/<id>/assign_role/
+router.register("dashboard", DashboardViewset, basename="dashboard")
+router.register("recent", RecentActivitiesViewset, basename="recent")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
