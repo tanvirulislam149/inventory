@@ -34,7 +34,7 @@ class SupplierViewsets(ModelViewSet):
 
 class ProductViewsets(ModelViewSet):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
-    filterset_fields = ['category',]
+    filterset_fields = ['category', "stock_status"]
     search_fields = ["name"]
 
     queryset = Product.objects.select_related("supplier").select_related("category").all()
