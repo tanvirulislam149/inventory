@@ -164,7 +164,8 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'Core.utils.custom_exception_handler',
     'DEFAULT_PERMISSION_CLASSES': [
         'Core.permissions.IsOwnerOrStaff',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 }
 
 SIMPLE_JWT = {
