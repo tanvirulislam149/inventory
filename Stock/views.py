@@ -8,10 +8,16 @@ from django.db import transaction
 from Core.permissions import IsOwner, IsOwnerOrStaff
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.db.models import Count, Sum, Q
+from django.db.models import Sum
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 # Create your views here.
 class StockViewset(ModelViewSet):
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter)
+    filterset_fields = ["movement_type", "date"]
+    search_fields = ["product__name"]
+
     queryset = Stock.objects.select_related("product").select_related("user").select_related("product__category").select_related("product__supplier").all()
 
     def get_permissions(self):
