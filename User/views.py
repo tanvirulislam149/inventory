@@ -4,7 +4,11 @@ from rest_framework.viewsets import ModelViewSet
 from User.serializers import MyGroupSerializer, MyPermissionSerializer, CreateMyGroupSerializer, UserSerializer
 from django.contrib.auth.models import Group, Permission
 from Core.permissions import IsOwner
-
+from djoser.views import UserViewSet
+from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
+from rest_framework import status
 # Create your views here.
 User = get_user_model()
 
@@ -25,9 +29,25 @@ class MyPermissionViewset(ModelViewSet):
     permission_classes = [IsOwner]
 
 
-class AssignRoleViewset(ModelViewSet):
-    http_method_names = ["put", "patch"]
-    serializer_class = UserSerializer
-    def update(self, request):
-        instance = self.get_object()
-        data = request.data
+class CustomUserViewset(UserViewSet):
+    @action(detail=True, methods=["patch"], permission_classes=[IsOwner])
+    def assign_role(self, request, *args, **kwargs):
+        user = self.get_object()
+        role = request.data.get("role")  # demo data ==> {"role": "Staff"}
+
+        if not role:
+            raise ValidationError({"role": "Please enter role."})
+        
+        user.groups.clear()
+        group = Group.objects.get(name=role)
+        user.groups.add(group)
+
+        return Response(
+            {
+                "message": f"User '{user.email}' role changed to '{role}'.",
+                "role": role,
+            },
+            status=status.HTTP_200_OK,
+        )
+        
+        

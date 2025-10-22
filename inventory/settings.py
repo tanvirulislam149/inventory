@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "debug_toolbar",
     "rest_framework",
+    'django_filters',
     'djoser',
     "Product",
     "User",
@@ -157,10 +158,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
     'EXCEPTION_HANDLER': 'Core.utils.custom_exception_handler',
     'DEFAULT_PERMISSION_CLASSES': [
         'Core.permissions.IsOwnerOrStaff',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 }
 
 SIMPLE_JWT = {
